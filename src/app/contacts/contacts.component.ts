@@ -10,7 +10,7 @@ export class ContactsComponent implements OnInit {
 selectedContact: Contact;
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

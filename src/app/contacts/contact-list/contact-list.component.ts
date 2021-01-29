@@ -22,7 +22,8 @@ contacts: Contact[] = [
         ),
 
     new Contact(
-      '2', 'Brother Jackson',
+      '2',
+      'Brother Jackson',
        'jacksonk@byui.edu',
        '208-496-3771',
        'https://web.byui.edu/Directory/Employee/jacksonk.jpg',

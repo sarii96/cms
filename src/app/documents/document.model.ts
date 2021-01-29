@@ -2,9 +2,9 @@ export class Document {
   constructor(
       public id: string,
       public name: string,
-      public email: string,
-      public phone: string,
-      public imageUrl: string,
+      public description: string,
+      public url: string,
+      public children: Document[]
 
   ) { }
 }
