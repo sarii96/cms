@@ -8,15 +8,19 @@ import {MOCKMESSAGES} from './MOCKMESSAGES';
 
 export class MessageService {
   private messages: Message[] =[];
-  messageSelectedEvent = new EventEmitter<Message>()
+  messageChangedEvent = new EventEmitter<Message[]>()
 
   constructor() {
     this.messages = MOCKMESSAGES;
   }
   getMessages(): Message[]{
-    return this.messages
-    .sort((a, b) => a.msgText > b.msgText ? 1 : b.msgText > a.msgText ? -1: 0)
-    .slice();
+    return this.messages.slice();
+
+  }
+
+  addMessage(message: Message ){
+    this.messages.push(message);
+    this.messageChangedEvent.emit(this.messages.slice());
   }
 
   getMessage(id:string): Message {
