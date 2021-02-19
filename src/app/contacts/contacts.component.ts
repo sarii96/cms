@@ -12,7 +12,7 @@ selectedContact: Contact;
   constructor(private contactService: ContactService) { }
 
   ngOnInit() {
-    this.contactService.contactSelectedEvent.subscribe(
+    this.contactService.contactChangedEvent.subscribe(
       (contact: Contact) =>{
         this.selectedContact = contact;
       }

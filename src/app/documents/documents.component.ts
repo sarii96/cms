@@ -12,7 +12,7 @@ selectedDocument: Document;
   constructor(private documentService: DocumentService) { }
 
   ngOnInit(){
-    this.documentService.documentSelectedEvent.subscribe(
+    this.documentService.documentChangedEvent.subscribe(
       (document: Document) =>{
         this.selectedDocument = document;
       }

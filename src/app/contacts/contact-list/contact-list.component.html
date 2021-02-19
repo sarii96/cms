@@ -7,14 +7,14 @@
         </span>
       </div>
       <div class="col-xs-3">
-        <button class="btn btn-success">New Contacts</button>
+        <a [routerLink]="['new']" class="btn btn-success">New Contacts</a>
       </div>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-xs-12 margin-top">
           <br>
-          <cms-contact-item *ngFor="let contact of contacts" [contact]="contact" (click)="onSelected(contact)">
+          <cms-contact-item *ngFor="let contact of contacts" [contact]="contact">
           </cms-contact-item>
         </div>
       </div>
