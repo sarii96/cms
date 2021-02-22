@@ -38,6 +38,7 @@ import{ContactEditComponent} from './contacts/contact-edit/contact-edit.componen
     DocumentEditComponent,
     ContactEditComponent
 
+
    ],
   imports: [
     BrowserModule,
