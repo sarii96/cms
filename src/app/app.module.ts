@@ -1,12 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DndModule} from 'ng2-dnd';
-
-
-
-
+import { DndModule } from 'ng2-dnd';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
@@ -16,14 +14,14 @@ import { DocumentsComponent } from './documents/documents.component';
 import { DocumentDetailComponent } from './documents/document-detail/document-detail.component';
 import { DocumentItemComponent } from './documents/document-item/document-item.component';
 import { DocumentListComponent } from './documents/document-list/document-list.component';
-import {MessageEditComponent} from './messages/message-edit/message-edit.component';
-import {MessageItemComponent} from './messages/message-item/message-item.component';
-import {MessageListComponent} from './messages/message-list/message-list.component';
+import { MessageEditComponent } from './messages/message-edit/message-edit.component';
+import { MessageItemComponent } from './messages/message-item/message-item.component';
+import { MessageListComponent } from './messages/message-list/message-list.component';
 import { DropdownDirective } from './dropdown.directive';
-import {AppRoutingModule} from './app-routing.module';
-import {DocumentEditComponent} from './documents/document-edit/document-edit.component';
-import{ContactEditComponent} from './contacts/contact-edit/contact-edit.component';
-
+import { AppRoutingModule } from './app-routing.module';
+import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
+import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -42,18 +40,17 @@ import{ContactEditComponent} from './contacts/contact-edit/contact-edit.componen
     MessageListComponent,
     DropdownDirective,
     DocumentEditComponent,
-    ContactEditComponent
-
-
-   ],
+    ContactEditComponent,
+    ContactsFilterPipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    DndModule.forRoot()
-
+    DndModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

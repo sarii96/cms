@@ -1,29 +1,80 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import {Message} from './message.model';
-import {MOCKMESSAGES} from './MOCKMESSAGES';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { Message } from './message.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class MessageService {
-  private messages: Message[] =[];
-  messageChangedEvent = new EventEmitter<Message[]>()
+  private messages: Message[] = [];
+  messageListChangedEvent = new Subject<Message[]>();
+  maxMessageId: number;
 
-  constructor() {
-    this.messages = MOCKMESSAGES;
+  constructor(private http: HttpClient) {}
+
+  addMessage(newMessage: Message) {
+    if (!newMessage) {
+      return;
+    }
+    this.maxMessageId++;
+
+    newMessage.id = this.maxMessageId.toString();
+
+    this.messages.push(newMessage);
+
+    this.storeMessages();
   }
-  getMessages(): Message[]{
-    return this.messages.slice();
 
+  getMessage(id: string): Message {
+    return this.messages.find((message) => message.id === id);
   }
 
-  addMessage(message: Message ){
-    this.messages.push(message);
-    this.messageChangedEvent.emit(this.messages.slice());
+  getMessages() {
+    this.http
+      .get('https://wdd-430-project-default-rtdb.firebaseio.com/messages.json')
+      .subscribe(
+        // success method
+        (messages: Message[]) => {
+          this.messages = messages;
+          this.maxMessageId = this.getMaxId();
+
+          this.messages.sort((a, b) =>
+            a.subject > b.subject ? 1 : b.subject > a.subject ? -1 : 0
+          );
+          this.messageListChangedEvent.next(this.messages.slice());
+        },
+        // error method
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
-  getMessage(id:string): Message {
-    return this.messages.find((message)=> message.id === id);
+  getMaxId(): number {
+    let maxId = 0;
+    for (const message of this.messages) {
+      let currentId = parseInt(message.id);
+      if (currentId > maxId) {
+        maxId = currentId;
+      }
+    }
+    return maxId;
+  }
+
+  storeMessages() {
+    let messages = JSON.stringify(this.messages);
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .put(
+        'https://wdd-430-project-default-rtdb.firebaseio.com/messages.json',
+        messages,
+        { headers: headers }
+      )
+      .subscribe(() => {
+        this.messageListChangedEvent.next(this.messages.slice());
+      });
   }
 }
